@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 
 from .models import User
 from .serializers import UserDetailSerializer
+from property.serializers import ReservationsListSerializer
 
 
 @api_view(['GET'])
@@ -13,4 +14,10 @@ from .serializers import UserDetailSerializer
 def landlord_detail(request, pk):
     user = User.objects.get(pk=pk)
     serializer = UserDetailSerializer(user, many= False)
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def reservations_list(request):
+    reservations = request.user.reservations.all()
+    serializer = ReservationsListSerializer(reservations, many=True)
     return JsonResponse(serializer.data, safe=False)
