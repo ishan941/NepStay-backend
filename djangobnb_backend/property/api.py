@@ -13,8 +13,15 @@ from .serializers import PropertiesListSerializer, PropertiesDetailSerializer, R
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([])
-def properties_list(reqest):
+def properties_list(request):
     properties =Property.objects.all()
+    #
+    #Filter
+    landlord_id = request.GET.get('landlord_id', '')
+    if landlord_id:
+        properties = properties.filter(landlord_id=landlord_id)
+    #
+    #
     serializer = PropertiesListSerializer(properties, many=True)
 
     return JsonResponse({
