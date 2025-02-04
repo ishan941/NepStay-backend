@@ -23,7 +23,7 @@ AUTH_USER_MODEL = 'useraccount.User'
 
 SITE_ID = 1
 
-WEBBSITE_URL ='https://localhost:8000'
+WEBBSITE_URL ='https://localhost:8000', 
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
@@ -40,6 +40,12 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = None
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "2cbd-27-34-73-169.ngrok-free.app"
+    ]
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -53,7 +59,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:8000',
     'http://127.0.0.1:3000',
-    'https://381b-27-34-73-161.ngrok-free.app',
+    'https://2cbd-27-34-73-169.ngrok-free.app',
 
     # 'http://64.226.81.32',
     # 'http://64.226.81.32:1337'
@@ -62,7 +68,7 @@ CORS_ALLOWED_ORIGINS = [
 CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1:8000",
     "http://localhost:8000",
-    "https://381b-27-34-73-161.ngrok-free.app",
+    "https://2cbd-27-34-73-169.ngrok-free.app",
     # 'http://127.0.0.1:8000',
     # 'http://127.0.0.1:3000',
     # 'http://64.226.81.32',
