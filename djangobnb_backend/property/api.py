@@ -16,9 +16,9 @@ from useraccount.models import User
 @authentication_classes([])
 @permission_classes([])
 def properties_list(request):
-    
-    #
+ #
     # Auth
+
     try:
         token = request.META['HTTP_AUTHORIZATION'].split('Bearer ')[1]
         token = AccessToken(token)
@@ -26,19 +26,24 @@ def properties_list(request):
         user = User.objects.get(pk=user_id)
     except Exception as e:
         user = None
-        print('user,',user)
-        
-        
+
     #
-    # 
-    favorites =[]      
-    properties =Property.objects.all()
+    #
+
+    favorites = []
+    properties = Property.objects.all()
+
+    #
+    # Filter
+
+    is_favorites = request.GET.get('is_favorites', '')
     
-    #
-    #Filter
     landlord_id = request.GET.get('landlord_id', '')
     if landlord_id:
         properties = properties.filter(landlord_id=landlord_id)
+        
+    if is_favorites:
+        properties = properties.filter(favorites__in=[user])    
     #
     # Favorites
         
@@ -127,11 +132,12 @@ def book_property(request, pk):
 @api_view(['POST'])
 def toggle_favorite(request, pk):
     property = Property.objects.get(pk=pk)
-    
+
     if request.user in property.favorited.all():
         property.favorited.remove(request.user)
+
         return JsonResponse({'is_favorite': False})
-    
     else:
         property.favorited.add(request.user)
+
         return JsonResponse({'is_favorite': True})
