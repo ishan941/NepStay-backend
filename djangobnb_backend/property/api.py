@@ -43,7 +43,7 @@ def properties_list(request):
         properties = properties.filter(landlord_id=landlord_id)
         
     if is_favorites:
-        properties = properties.filter(favorites__in=[user])    
+        properties = properties.filter(favorited__in=[user])
     #
     # Favorites
         
